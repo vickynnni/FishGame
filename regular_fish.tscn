@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc2qqe8a5iq8f"]
+
+[ext_resource type="Texture2D" uid="uid://5bjqqcruy4hs" path="res://art/arrow.png" id="1_1m065"]
+[ext_resource type="Script" path="res://scripts/fish.gd" id="1_jpi7e"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uooc6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_1m065")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50gm8"]
+size = Vector2(30, 30)
+
+[node name="RegularFish" type="Area2D"]
+script = ExtResource("1_jpi7e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+sprite_frames = SubResource("SpriteFrames_uooc6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_50gm8")
