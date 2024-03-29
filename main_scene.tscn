@@ -1,6 +1,19 @@
+<<<<<<< HEAD
 [gd_scene load_steps=2 format=3 uid="uid://cx5csvgq6rkyf"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_q0s8o"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_q0s8o")
+=======
+[gd_scene load_steps=3 format=3 uid="uid://bd12ugpn2tagb"]
+
+[ext_resource type="PackedScene" uid="uid://c7m73p17y4ea7" path="res://player_fish.tscn" id="1_63uo8"]
+[ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_pgiek"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_pgiek")
+
+[node name="PlayerFish" parent="." instance=ExtResource("1_63uo8")]
+position = Vector2(467, 333)
+>>>>>>> 75c99731e606cbe6d7fbc2cb502bc2f5862322a8

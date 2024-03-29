@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var FishClass = preload("res://regular_fish.tscn")
 var num_fish = 10
@@ -8,6 +8,8 @@ var fish_list = []
 #var topmargin = 4000
 #var bottommargin = 3000	
 var turnfactor = 0.2
+@onready
+var player = get_node("PlayerFish")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
