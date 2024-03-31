@@ -32,4 +32,9 @@ shape = SubResource("RectangleShape2D_50gm8")
 
 [node name="SpeedTimer" type="Timer" parent="."]
 
+[node name="BoostGenerator" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+
 [connection signal="timeout" from="SpeedTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="BoostGenerator" to="." method="_on_boost_generator_timeout"]

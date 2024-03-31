@@ -1,11 +1,17 @@
 class_name FishBank
 
 var fish_list = []
+var bank_position = 0.0
+var has_player = false
+var bank_max_speed = 6
+
+
 
 func _init(_fish_list:Array):
 	fish_list = _fish_list
 	var position = Vector2(randf_range(100,1000.0),randf_range(100,700.0))
 	var velocity = Vector2(randf_range(-5.0,5.0),randf_range(-5.0,5.0))
+	bank_max_speed = fish_list[0].max_speed
 	for fish in fish_list:
 		fish.position = position + Vector2(randf_range(-20.0,20.0),randf_range(-20.0,20.0))
 		fish.velocity = velocity
@@ -22,45 +28,69 @@ func separation(list):
 		var distance = Vector2(0.0,0.0)
 		var threshold = fish.separation
 		for other_fish in list:
-			if fish == other_fish:
-				break
+			if(fish == other_fish):
+				continue
 			distance = fish.position - other_fish.position
+			if(other_fish.fishType == "player"):
+					threshold *= 2
 			if (distance.length() <= threshold):
 				fish.close_d += distance
+		if(fish.fishType == "player"):
+			if(fish.no_external_forces):
+				break
 		fish.velocity += fish.close_d * fish.avoidfactor
-		detect_wall_collisions(fish)
+		#detect_wall_collisions(fish)
 
+func add_player(player):
+	if !has_player:
+		fish_list.append(player)
+		has_player = true
 
+func remove_player(player):
+	if has_player:
+		fish_list.remove_at(fish_list.size() - 1)
+		has_player = false
+	
 func alignment(list):
 	for fish in list:
 		fish.neighboring_boids = 0
 		fish.vel_avg = Vector2(0.0,0.0)
 		var distance = Vector2(0.0,0.0)
 		for other_fish in list:
+			if(fish == other_fish):
+				continue
 			distance = fish.position - other_fish.position
 			if (distance.length() < fish.visible_range):
 				fish.vel_avg += other_fish.vel_avg
 				fish.neighboring_boids += 1
 		if (fish.neighboring_boids > 0):
 			fish.vel_avg = fish.vel_avg/fish.neighboring_boids
+		if(fish.fishType == "player"):
+			if(fish.no_external_forces):
+				break
 		fish.velocity += (fish.vel_avg)* fish.matching_factor
-		detect_wall_collisions(fish)
+		#detect_wall_collisions(fish)
 
 
 func cohesion(list):
+	var pos_avg = Vector2(0.0,0.0)
+	var neighboring_boids = 0
 	for fish in list:
-		fish.pos_avg = Vector2(0.0,0.0)
-		fish.neighboring_boids = 0
-		for other_fish in list:
-			fish.pos_avg += other_fish.position
-			fish.neighboring_boids += 1
-		if (fish.neighboring_boids > 0):
-			fish.pos_avg = fish.pos_avg/fish.neighboring_boids
-		fish.velocity += (fish.pos_avg - fish.position)*fish.centering_factor
+		pos_avg += fish.position
+		neighboring_boids += 1
+	if (neighboring_boids > 0):
+		pos_avg = pos_avg/neighboring_boids
+	
+	for fish in list:
+		if(fish.fishType == "player"):
+			if(fish.no_external_forces):
+				break
+		fish.velocity += (pos_avg - fish.position)*fish.centering_factor
 		detect_wall_collisions(fish)
+	bank_position = pos_avg
 
 func detect_wall_collisions(fish):
-	var collision_factor = 2
+	var collision_factor = 5
 	var rightmargin = 1280
 	var bottommargin = 720
 	var topmargin = 0
