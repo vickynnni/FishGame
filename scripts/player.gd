@@ -40,7 +40,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	print(max_vel)
+	#print(max_vel)
 	calc_rotation()
 	go_to_mouse()
 	dec_max_speed()
