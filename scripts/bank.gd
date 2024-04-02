@@ -4,14 +4,23 @@ var fish_list = []
 var bank_position = 0.0
 var has_player = false
 var bank_max_speed = 6
+var bank_speed_boost = 8
+var normal_speed = 6
+var avg_velocity = Vector2(0.0,0.0)
 
 
+func teleport(_position:Vector2):
+	print("teleported to" + str(_position))
+	var velocity = Vector2(randf_range(-20.0,20.0),randf_range(-20.0,20.0))
+	for fish in fish_list:
+		fish.position = _position + Vector2(randf_range(-30.0,30.0),randf_range(-30.0,30.0))
+		fish.velocity = velocity
 
 func _init(_fish_list:Array):
 	fish_list = _fish_list
 	var position = Vector2(randf_range(100,1000.0),randf_range(100,700.0))
-	var velocity = Vector2(randf_range(-5.0,5.0),randf_range(-5.0,5.0))
-	bank_max_speed = fish_list[0].max_speed
+	var velocity = Vector2(randf_range(-10.0,10.0),randf_range(-10.0,10.0))
+	normal_speed = fish_list[0].max_speed
 	for fish in fish_list:
 		fish.position = position + Vector2(randf_range(-20.0,20.0),randf_range(-20.0,20.0))
 		fish.velocity = velocity
@@ -32,12 +41,12 @@ func separation(list):
 				continue
 			distance = fish.position - other_fish.position
 			if(other_fish.fishType == "player"):
-					threshold *= 2
+					threshold *= 0.4
 			if (distance.length() <= threshold):
 				fish.close_d += distance
 		if(fish.fishType == "player"):
 			if(fish.no_external_forces):
-				break
+				continue
 		fish.velocity += fish.close_d * fish.avoidfactor
 		#detect_wall_collisions(fish)
 
@@ -45,11 +54,17 @@ func add_player(player):
 	if !has_player:
 		fish_list.append(player)
 		has_player = true
+		for fish in fish_list:
+			fish.max_speed += 2
+			bank_max_speed = bank_speed_boost
 
 func remove_player(player):
 	if has_player:
 		fish_list.remove_at(fish_list.size() - 1)
 		has_player = false
+		for fish in fish_list:
+			bank_max_speed = normal_speed
+			fish.max_speed -= 3
 	
 func alignment(list):
 	for fish in list:
@@ -67,7 +82,7 @@ func alignment(list):
 			fish.vel_avg = fish.vel_avg/fish.neighboring_boids
 		if(fish.fishType == "player"):
 			if(fish.no_external_forces):
-				break
+				continue
 		fish.velocity += (fish.vel_avg)* fish.matching_factor
 		#detect_wall_collisions(fish)
 
@@ -86,7 +101,7 @@ func cohesion(list):
 			if(fish.no_external_forces):
 				break
 		fish.velocity += (pos_avg - fish.position)*fish.centering_factor
-		detect_wall_collisions(fish)
+		#detect_wall_collisions(fish)
 	bank_position = pos_avg
 
 func detect_wall_collisions(fish):
@@ -119,10 +134,21 @@ func detect_wall_collisions(fish):
 		fish.velocity.y = -fish.velocity.y
 	else:
 		fish.velocity.y = fish.velocity.y + (-1/dist_bottom_border)*collision_factor
-
+		
+func calc_avg_velocity():
+	var n = 0
+	var avg = Vector2(0.0,0.0)
+	for fish in fish_list:
+		n+=1
+		avg += fish.velocity
+	if(n != 0):
+		avg /= n
+		return avg
+	return Vector2(0.0,0.0)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	avg_velocity = calc_avg_velocity()
 	separation(fish_list)
 	alignment(fish_list)
 	cohesion(fish_list)

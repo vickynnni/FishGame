@@ -4,7 +4,7 @@ var rotation_velocity = 0.0
 var max_rotation_speed = 1.0
 var normal_max_vel = 6
 var current_max_vel = 6
-var min_max_vel = 1
+var min_max_vel = 2
 var dist_to_mouse = Vector2(0.0,0.0)
 var local_mouse_position = Vector2(0.0,0.0)
 var global_mouse_position = Vector2(0.0,0.0)
@@ -16,6 +16,7 @@ var boost = 2
 var no_external_forces = false
 var max_num_boosts = 3
 var num_boosts = 3
+var mouse_multiplier = 0.0001
 
 
 var bank_list = []
@@ -61,17 +62,17 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#print(num_boosts)
-	#print(current_max_vel)
+	print(current_max_vel)
 	#calc_rotation()
 	go_to_mouse()
 	dec_max_speed()
 	check_banks_proximity()
 	if(attached_to_bank != null):
-		boost = 7
+		boost = 6
 		current_max_vel = attached_to_bank.bank_max_speed
 	else:
 		boost = 2
-		current_max_vel -= 0.023
+		current_max_vel -= 0.020
 	if(current_max_vel < min_max_vel):
 		current_max_vel = min_max_vel
 	velocity *= drag
@@ -92,12 +93,12 @@ func go_to_mouse():
 	global_mouse_position = get_global_mouse_position()
 	local_mouse_position = get_local_mouse_position()
 	dist_to_mouse = (global_mouse_position - position)
-	var multiplier = 0.0001
+	mouse_multiplier = 0.0001
 	if(dist_to_mouse.length() > 70):
 		dist_to_mouse = dist_to_mouse.normalized()
-		multiplier = 0.1
+		mouse_multiplier = 0.1
 	elif(dist_to_mouse.length() < 70):
-		multiplier = 0
+		mouse_multiplier = 0
 		
 	velocity += dist_to_mouse*multiplier
 
@@ -110,12 +111,21 @@ func check_banks_proximity():
 			if(attached_to_bank == null):
 				bank.add_player(self)
 				attached_to_bank = bank
-				current_max_vel = 6
+				current_max_vel = attached_to_bank.avg_velocity.length()
 		else:
 			if(bank == attached_to_bank):
 				bank.remove_player(self)
-				current_max_vel = attached_to_bank.bank_max_speed
 				attached_to_bank = null
+		
+		
+		if(dist_to_bank > 2000):
+			var mult1 = 1
+			var mult2 = 1
+			if(randi()%2==0):
+				mult1 = -1
+			if(randi()%2==0):
+				mult2 = -1
+			bank.teleport(position + Vector2(mult1*randf_range(1000,1200),mult2*randf_range(1000,1500)))
 				
 
 func _on_timer_timeout():
