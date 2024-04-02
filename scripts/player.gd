@@ -50,8 +50,8 @@ func _ready():
 	fishType = "player"
 	separation = 1
 	avoidfactor = 0.001
-	matching_factor = 1
-	centering_factor = 0.005
+	matching_factor = 0.0001
+	centering_factor = 0.001
 	speed_timer = get_node("SpeedTimer")
 	speed_timer.wait_time = 0.5
 	
@@ -62,17 +62,19 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#print(num_boosts)
-	print(current_max_vel)
+	print("max_vel: " + str(current_max_vel))
+	print("vel: " + str(velocity.length()))
 	#calc_rotation()
 	go_to_mouse()
 	dec_max_speed()
 	check_banks_proximity()
 	if(attached_to_bank != null):
 		boost = 6
-		current_max_vel = attached_to_bank.bank_max_speed
+		if(!no_external_forces):
+			current_max_vel = attached_to_bank.avg_velocity.length() + 0.5
 	else:
 		boost = 2
-		current_max_vel -= 0.020
+		current_max_vel -= 0.010
 	if(current_max_vel < min_max_vel):
 		current_max_vel = min_max_vel
 	velocity *= drag
@@ -99,14 +101,16 @@ func go_to_mouse():
 		mouse_multiplier = 0.1
 	elif(dist_to_mouse.length() < 70):
 		mouse_multiplier = 0
+	#if(attached_to_bank != null):
+		#mouse_multiplier = 0.01
 		
-	velocity += dist_to_mouse*multiplier
+	velocity += dist_to_mouse*mouse_multiplier
 
 func check_banks_proximity():
 	
 	for bank in bank_list:
 		var dist_to_bank = (position - bank.bank_position).length()
-		if(dist_to_bank < 100):
+		if(dist_to_bank < 150):
 			#print("in bank")
 			if(attached_to_bank == null):
 				bank.add_player(self)

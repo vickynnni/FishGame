@@ -22,7 +22,7 @@ func _init(_fish_list:Array):
 	var velocity = Vector2(randf_range(-10.0,10.0),randf_range(-10.0,10.0))
 	normal_speed = fish_list[0].max_speed
 	for fish in fish_list:
-		fish.position = position + Vector2(randf_range(-20.0,20.0),randf_range(-20.0,20.0))
+		fish.position = position + Vector2(randf_range(-30.0,30.0),randf_range(-30.0,30.0))
 		fish.velocity = velocity
 
 # Called when the node enters the scene tree for the first time.
@@ -40,10 +40,12 @@ func separation(list):
 			if(fish == other_fish):
 				continue
 			distance = fish.position - other_fish.position
-			if(other_fish.fishType == "player"):
-					threshold *= 0.4
+			#if(other_fish.fishType == "player"):
+			#		threshold *= 0.4
 			if (distance.length() <= threshold):
 				fish.close_d += distance
+			if(distance.length() < 0.5):
+				fish.close_d += Vector2(randf_range(-20.0,20.0),randf_range(-20.0,20.0))
 		if(fish.fishType == "player"):
 			if(fish.no_external_forces):
 				continue
@@ -54,36 +56,41 @@ func add_player(player):
 	if !has_player:
 		fish_list.append(player)
 		has_player = true
-		for fish in fish_list:
-			fish.max_speed += 2
-			bank_max_speed = bank_speed_boost
+		#for fish in fish_list:
+			#fish.max_speed += 2
+			#bank_max_speed = bank_speed_boost
 
 func remove_player(player):
 	if has_player:
 		fish_list.remove_at(fish_list.size() - 1)
 		has_player = false
-		for fish in fish_list:
-			bank_max_speed = normal_speed
-			fish.max_speed -= 3
+		#for fish in fish_list:
+			#bank_max_speed = normal_speed
+			#fish.max_speed -= 3
 	
 func alignment(list):
 	for fish in list:
 		fish.neighboring_boids = 0
 		fish.vel_avg = Vector2(0.0,0.0)
 		var distance = Vector2(0.0,0.0)
+		var matching_factor = fish.matching_factor
 		for other_fish in list:
 			if(fish == other_fish):
 				continue
+			
+			
 			distance = fish.position - other_fish.position
-			if (distance.length() < fish.visible_range):
-				fish.vel_avg += other_fish.vel_avg
-				fish.neighboring_boids += 1
+			if(other_fish.fishType == "player"):
+				fish.vel_avg += other_fish.velocity*800.0
+			fish.vel_avg += other_fish.velocity
+			fish.neighboring_boids += 1
+			
 		if (fish.neighboring_boids > 0):
 			fish.vel_avg = fish.vel_avg/fish.neighboring_boids
 		if(fish.fishType == "player"):
 			if(fish.no_external_forces):
 				continue
-		fish.velocity += (fish.vel_avg)* fish.matching_factor
+		fish.velocity += (fish.vel_avg) * matching_factor
 		#detect_wall_collisions(fish)
 
 
