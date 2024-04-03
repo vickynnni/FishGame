@@ -1,13 +1,20 @@
 class_name FishBank
 
 var fish_list = []
-var bank_position = 0.0
+var bank_position = Vector2(0.0,0.0)
 var has_player = false
 var bank_max_speed = 6
 var bank_speed_boost = 8
 var normal_speed = 6
 var avg_velocity = Vector2(0.0,0.0)
 
+func avoid_bank(dist):
+	for fish in fish_list:
+		fish.velocity += dist*0.00001
+
+func gotoavg(pos):
+	for fish in fish_list:
+		fish.velocity += pos*0.00001
 
 func teleport(_position:Vector2):
 	print("teleported to" + str(_position))
@@ -78,17 +85,21 @@ func alignment(list):
 			if(fish == other_fish):
 				continue
 			distance = fish.position - other_fish.position
-			#if(other_fish.fishType == "player"):
-				#fish.vel_avg += other_fish.velocity*100
+			if(other_fish.fishType == "player"):
+				#print("player")
+				#fish.vel_avg -= other_fish.velocity #se cancelan?
+				continue
 			fish.vel_avg += other_fish.velocity
 			fish.neighboring_boids += 1
 			
 		if (fish.neighboring_boids > 0):
 			fish.vel_avg = fish.vel_avg/fish.neighboring_boids
+		var multiplier = 1.0
 		if(fish.fishType == "player"):
+			multiplier = 1.4
 			if(fish.no_external_forces):
 				continue
-		fish.velocity += (fish.vel_avg) * matching_factor
+		fish.velocity += (fish.vel_avg) * matching_factor * multiplier
 		#detect_wall_collisions(fish)
 
 
@@ -96,6 +107,8 @@ func cohesion(list):
 	var pos_avg = Vector2(0.0,0.0)
 	var neighboring_boids = 0
 	for fish in list:
+		if(fish.fishType == "player"):
+			continue #No tenemos en cuenta al jugador para que no pare a los peces si está detrás del banco
 		pos_avg += fish.position
 		neighboring_boids += 1
 	if (neighboring_boids > 0):
@@ -103,7 +116,7 @@ func cohesion(list):
 	for fish in list:
 		if(fish.fishType == "player"):
 			if(fish.no_external_forces):
-				break
+				continue
 		fish.velocity += (pos_avg - fish.position)*fish.centering_factor
 		#detect_wall_collisions(fish)
 	bank_position = pos_avg

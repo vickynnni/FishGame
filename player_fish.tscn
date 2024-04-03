@@ -1,40 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://c7m73p17y4ea7"]
+[gd_scene load_steps=6 format=3 uid="uid://c7m73p17y4ea7"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_glpev"]
-[ext_resource type="Texture2D" uid="uid://5bjqqcruy4hs" path="res://art/arrow.png" id="2_sf47u"]
+[ext_resource type="Texture2D" uid="uid://oalrwt1ja8ol" path="res://art/pececillo.png" id="2_qtaq1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50gm8"]
+size = Vector2(86, 49)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uooc6"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_sf47u")
+"texture": ExtResource("2_qtaq1")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_50gm8"]
-size = Vector2(55, 55)
+[sub_resource type="SpriteFrames" id="SpriteFrames_l53s8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qtaq1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="PlayerFish" type="Area2D"]
 z_index = 2270
 script = ExtResource("1_glpev")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, 2.86102e-06)
-scale = Vector2(0.183333, 0.183333)
-sprite_frames = SubResource("SpriteFrames_uooc6")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 0)
+position = Vector2(-1, -3.5)
 shape = SubResource("RectangleShape2D_50gm8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -1)
+scale = Vector2(0.130394, 0.129855)
+sprite_frames = SubResource("SpriteFrames_uooc6")
 
 [node name="SpeedTimer" type="Timer" parent="."]
 
 [node name="BoostGenerator" type="Timer" parent="."]
 wait_time = 3.0
 autostart = true
+
+[node name="Node" type="Node" parent="."]
+
+[node name="shadow" type="AnimatedSprite2D" parent="Node"]
+visible = false
+modulate = Color(0.14902, 0.14902, 0.14902, 1)
+z_index = -3000
+scale = Vector2(0.189181, 0.187621)
+sprite_frames = SubResource("SpriteFrames_l53s8")
+centered = false
+offset = Vector2(-301.299, -143.907)
 
 [connection signal="timeout" from="SpeedTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="BoostGenerator" to="." method="_on_boost_generator_timeout"]

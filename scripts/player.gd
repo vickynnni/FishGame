@@ -1,5 +1,7 @@
 extends Fish
 
+
+
 var rotation_velocity = 0.0
 var max_rotation_speed = 1.0
 var normal_max_vel = 4
@@ -46,6 +48,7 @@ func dec_max_speed():
 
 # Called whgen the node enters the scene tree for the first time.
 func _ready():
+	shadow_offset = Vector2(6,6)
 	fish_name = "bipo"
 	fishType = "player"
 	separation = 1
@@ -58,16 +61,45 @@ func _ready():
 	
 	pass # Replace with function body.
 
+func check_flip():
+	var shadow = get_node("Node/shadow")
+	var x_scale = $AnimatedSprite2D.scale.x
+	var y_scale = $AnimatedSprite2D.scale.y
+	var s_x_scale = shadow.scale.x
+	var s_y_scale = shadow.scale.y
+	if(velocity.x < 0):
+		if(!rightleft):
+			$AnimatedSprite2D.scale.y = -y_scale
+			$AnimatedSprite2D.scale.x = x_scale
+			#shadow.scale.y = -s_y_scale
+			#shadow.scale.x = s_x_scale
+			#shadow_offset = shadow_offset + Vector2(5,0)
+			rightleft=true
+	else:
+		if(rightleft):
+			$AnimatedSprite2D.scale.y = -y_scale
+			$AnimatedSprite2D.scale.x = x_scale
+			#shadow.scale.y = -s_y_scale
+			#shadow.scale.x = s_x_scale
+			#shadow_offset = Vector2(6,6)
+			rightleft = false
+		
+func calc_shadow():
+	var shadow = get_node("Node/shadow")
+	shadow.position = self.position + shadow_offset
+	shadow.rotation = self.rotation
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	#print(num_boosts)
-	print("max_vel: " + str(current_max_vel))
-	print("vel: " + str(velocity.length()))
+	#print("max_vel: " + str(current_max_vel))
+	#print("vel: " + str(velocity.length()))
 	#calc_rotation()
 	go_to_mouse()
 	dec_max_speed()
 	check_banks_proximity()
+	check_flip()
 	if(attached_to_bank != null):
 		boost = 6
 		if(!no_external_forces):
@@ -85,6 +117,7 @@ func _process(delta):
 		rotation_velocity = max_rotation_speed
 	
 	rotation = velocity.angle()
+	calc_shadow()
 	pass
 
 func calc_rotation():
@@ -121,7 +154,7 @@ func check_banks_proximity():
 				attached_to_bank = null
 		
 		
-		if(dist_to_bank > 2000):
+		if(dist_to_bank > 1500):
 			var mult1 = 1
 			var mult2 = 1
 			if(randi()%2==0):

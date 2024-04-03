@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://dacjb3cfpjy7x"]
+
+[ext_resource type="Script" path="res://moonfish.gd" id="1_mtgim"]
+[ext_resource type="Texture2D" uid="uid://8m2m28vs7lc7" path="res://art/azul_left.png" id="2_kbkwf"]
+[ext_resource type="Texture2D" uid="uid://1fkq5x0k32yu" path="res://art/azul_right.png" id="3_6l603"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uooc6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_kbkwf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6l603")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50gm8"]
+size = Vector2(30, 30)
+
+[node name="MoonFish" type="Area2D"]
+script = ExtResource("1_mtgim")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.040625, 0.040625)
+sprite_frames = SubResource("SpriteFrames_uooc6")
+frame_progress = 0.637752
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_50gm8")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="shadow" type="AnimatedSprite2D" parent="Node"]
+visible = false
+modulate = Color(0.14902, 0.14902, 0.14902, 1)
+show_behind_parent = true
+z_index = -2120
+position = Vector2(1, 4.76837e-07)
+scale = Vector2(0.095, 0.095)
+sprite_frames = SubResource("SpriteFrames_uooc6")
+
+[node name="animTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="animTimer" to="." method="_on_anim_timer_timeout"]

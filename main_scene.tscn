@@ -1,10 +1,23 @@
-[gd_scene load_steps=6 format=3 uid="uid://cx40oaypy4cvu"]
+[gd_scene load_steps=10 format=3 uid="uid://cx40oaypy4cvu"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_noehc"]
 [ext_resource type="Script" path="res://Camera.gd" id="2_2o3jf"]
 [ext_resource type="PackedScene" uid="uid://c7m73p17y4ea7" path="res://player_fish.tscn" id="2_70qc6"]
 [ext_resource type="Script" path="res://scripts/ParallaxBackground.gd" id="3_x3saq"]
 [ext_resource type="Texture2D" uid="uid://d4h0vyvqgqm4p" path="res://art/fondo2.png" id="5_kkco5"]
+[ext_resource type="Shader" path="res://main_scene.gdshader" id="6_ybixc"]
+
+[sub_resource type="Gradient" id="Gradient_lnop0"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rdh7c"]
+gradient = SubResource("Gradient_lnop0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0feq0"]
+shader = ExtResource("6_ybixc")
+shader_parameter/background_color = Color(1, 1, 1, 1)
+shader_parameter/shadow_color = Color(0.00392157, 0.00392157, 0.00392157, 1)
+shader_parameter/offset_in_pixels = Vector2(20, 20)
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_noehc")
@@ -18,6 +31,7 @@ script = ExtResource("2_2o3jf")
 script = ExtResource("3_x3saq")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+position = Vector2(-298, 8)
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(-178.875, -493.875)
@@ -38,3 +52,19 @@ texture = ExtResource("5_kkco5")
 position = Vector2(-178.875, 474.125)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("5_kkco5")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+offset_left = -651.0
+offset_top = -372.0
+offset_right = 649.0
+offset_bottom = 390.0
+texture = SubResource("GradientTexture1D_rdh7c")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_0feq0")
+offset_left = -657.0
+offset_top = -383.0
+offset_right = 667.0
+offset_bottom = 403.0

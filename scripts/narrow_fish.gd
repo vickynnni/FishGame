@@ -3,6 +3,7 @@ extends Fish
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	shadow_offset = Vector2(3,2)
 	separation = 25
 	avoidfactor = 0.003
 	max_speed = 7

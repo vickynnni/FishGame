@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://8olqc6dgduh5"]
+[gd_scene load_steps=6 format=3 uid="uid://8olqc6dgduh5"]
 
 [ext_resource type="Script" path="res://scripts/narrow_fish.gd" id="1_suro6"]
-[ext_resource type="Texture2D" uid="uid://5bjqqcruy4hs" path="res://art/arrow.png" id="2_v0r2o"]
+[ext_resource type="Texture2D" uid="uid://0ltcdd1sdb3e" path="res://art/morado_right.png" id="2_h4jtl"]
+[ext_resource type="Texture2D" uid="uid://ca1rthx3jeapm" path="res://art/morado_left.png" id="3_chkvv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uooc6"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_v0r2o")
+"texture": ExtResource("2_h4jtl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_chkvv")
 }],
 "loop": true,
 "name": &"default",
@@ -15,16 +19,34 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50gm8"]
-size = Vector2(58, 19)
+size = Vector2(61, 26)
 
 [node name="NarrowFish" type="Area2D"]
 script = ExtResource("1_suro6")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(14, -5.5)
-scale = Vector2(0.193333, 0.0633333)
+position = Vector2(2, -2)
+scale = Vector2(0.140174, 0.140174)
 sprite_frames = SubResource("SpriteFrames_uooc6")
+autoplay = "default"
+frame_progress = 0.531085
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(14, -5.5)
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_50gm8")
+
+[node name="Node" type="Node" parent="."]
+
+[node name="shadow" type="AnimatedSprite2D" parent="Node"]
+visible = false
+modulate = Color(0.14902, 0.14902, 0.14902, 1)
+show_behind_parent = true
+z_index = -2360
+position = Vector2(14.4242, -5.39347)
+scale = Vector2(0.190506, 0.0626231)
+sprite_frames = SubResource("SpriteFrames_uooc6")
+
+[node name="animTimer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="animTimer" to="." method="_on_anim_timer_timeoutd"]
