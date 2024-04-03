@@ -1,16 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://cx40oaypy4cvu"]
+[gd_scene load_steps=6 format=3 uid="uid://cx40oaypy4cvu"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_noehc"]
+[ext_resource type="Script" path="res://Camera.gd" id="2_2o3jf"]
 [ext_resource type="PackedScene" uid="uid://c7m73p17y4ea7" path="res://player_fish.tscn" id="2_70qc6"]
-[ext_resource type="Texture2D" uid="uid://dkosgy7oq26io" path="res://art/Sin nombre.png" id="3_e4ca0"]
 [ext_resource type="Script" path="res://scripts/ParallaxBackground.gd" id="3_x3saq"]
+[ext_resource type="Texture2D" uid="uid://d4h0vyvqgqm4p" path="res://art/fondo2.png" id="5_kkco5"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_noehc")
 
-[node name="PlayerFish" parent="." instance=ExtResource("2_70qc6")]
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_2o3jf")
 
-[node name="Camera2D" type="Camera2D" parent="PlayerFish"]
+[node name="PlayerFish" parent="." instance=ExtResource("2_70qc6")]
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 script = ExtResource("3_x3saq")
@@ -20,19 +22,19 @@ script = ExtResource("3_x3saq")
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(-178.875, -493.875)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_e4ca0")
+texture = ExtResource("5_kkco5")
 
 [node name="Sprite2D2" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(789.125, -493.875)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_e4ca0")
+texture = ExtResource("5_kkco5")
 
 [node name="Sprite2D3" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(789.125, 474.125)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_e4ca0")
+texture = ExtResource("5_kkco5")
 
 [node name="Sprite2D4" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
 position = Vector2(-178.875, 474.125)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_e4ca0")
+texture = ExtResource("5_kkco5")

@@ -77,11 +77,9 @@ func alignment(list):
 		for other_fish in list:
 			if(fish == other_fish):
 				continue
-			
-			
 			distance = fish.position - other_fish.position
-			if(other_fish.fishType == "player"):
-				fish.vel_avg += other_fish.velocity*800.0
+			#if(other_fish.fishType == "player"):
+				#fish.vel_avg += other_fish.velocity*100
 			fish.vel_avg += other_fish.velocity
 			fish.neighboring_boids += 1
 			
@@ -102,7 +100,6 @@ func cohesion(list):
 		neighboring_boids += 1
 	if (neighboring_boids > 0):
 		pos_avg = pos_avg/neighboring_boids
-	
 	for fish in list:
 		if(fish.fishType == "player"):
 			if(fish.no_external_forces):

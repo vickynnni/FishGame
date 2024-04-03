@@ -32,9 +32,9 @@ func create_narrow_bank(num_fish):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for n in 10:
-		create_narrow_bank(5)
-	for n in 10:
-		create_normal_bank(10)
+		create_narrow_bank(randi()%10 + 2)
+	for n in 20:
+		create_normal_bank(randi()%30 + 2)
 	player.set_banks(bank_list)
 	pass # Replace with function body.
 

@@ -2,9 +2,9 @@ extends Fish
 
 var rotation_velocity = 0.0
 var max_rotation_speed = 1.0
-var normal_max_vel = 6
-var current_max_vel = 6
-var min_max_vel = 2
+var normal_max_vel = 4
+var current_max_vel = 4
+var min_max_vel = 3
 var dist_to_mouse = Vector2(0.0,0.0)
 var local_mouse_position = Vector2(0.0,0.0)
 var global_mouse_position = Vector2(0.0,0.0)
@@ -32,7 +32,7 @@ func _input(event):
 					var boost_generator = get_node("BoostGenerator")
 					boost_generator.start()
 					no_external_forces = true
-					current_max_vel = 10
+					current_max_vel = 9
 					velocity += dist_to_mouse*boost
 					can_speedup = false
 					speed_timer.start()
@@ -42,7 +42,7 @@ func _input(event):
 
 func dec_max_speed():
 	if(current_max_vel > normal_max_vel):
-		current_max_vel -= 0.3
+		current_max_vel -= 0.03
 
 # Called whgen the node enters the scene tree for the first time.
 func _ready():
@@ -50,7 +50,7 @@ func _ready():
 	fishType = "player"
 	separation = 1
 	avoidfactor = 0.001
-	matching_factor = 0.0001
+	matching_factor = 0.001
 	centering_factor = 0.001
 	speed_timer = get_node("SpeedTimer")
 	speed_timer.wait_time = 0.5
@@ -71,7 +71,7 @@ func _process(delta):
 	if(attached_to_bank != null):
 		boost = 6
 		if(!no_external_forces):
-			current_max_vel = attached_to_bank.avg_velocity.length() + 0.5
+			current_max_vel = attached_to_bank.avg_velocity.length() + 0.3
 	else:
 		boost = 2
 		current_max_vel -= 0.010
@@ -107,7 +107,6 @@ func go_to_mouse():
 	velocity += dist_to_mouse*mouse_multiplier
 
 func check_banks_proximity():
-	
 	for bank in bank_list:
 		var dist_to_bank = (position - bank.bank_position).length()
 		if(dist_to_bank < 150):

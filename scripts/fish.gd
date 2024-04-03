@@ -8,14 +8,14 @@ var velocity = Vector2(0.0,0.0)
 var drag = 1
 var close_d = Vector2(0.0,0.0)
 var separation = 30
-var avoidfactor = 0.003
+var avoidfactor = 0.002
 var max_speed = 5
 var neighboring_boids = 0
 var vel_avg = Vector2(0.0,0.0)
 var pos_avg = Vector2(0.0,0.0)
 var visible_range = 200
 var matching_factor = 0.0001
-var centering_factor = 0.0006
+var centering_factor = 0.0004
 var rand_move = 0.0
 
 # max_velocity -> check
