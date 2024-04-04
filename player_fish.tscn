@@ -17,7 +17,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50gm8"]
 size = Vector2(55, 55)
 
-[node name="PlayerFish" type="Area2D"]
+[node name="PlayerFish" type="Area2D" groups=["PlayerFish"]]
 z_index = 2270
 script = ExtResource("1_glpev")
 

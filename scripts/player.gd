@@ -100,7 +100,7 @@ func go_to_mouse():
 	elif(dist_to_mouse.length() < 70):
 		mouse_multiplier = 0
 		
-	velocity += dist_to_mouse*multiplier
+	velocity += dist_to_mouse*mouse_multiplier
 
 func check_banks_proximity():
 	

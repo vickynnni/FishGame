@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://bx2iu1p3uo6pk"]
+
+[ext_resource type="Script" path="res://game_over.gd" id="1_rkaq1"]
+[ext_resource type="Texture2D" uid="uid://dkosgy7oq26io" path="res://art/Sin nombre.png" id="2_8k2e6"]
+[ext_resource type="Texture2D" uid="uid://cac1ls2kh1hex" path="res://art/buttons/restart.png" id="3_qewtp"]
+[ext_resource type="Texture2D" uid="uid://n86rruqgby2e" path="res://art/buttons/restart_pressed.png" id="4_ot3nr"]
+[ext_resource type="Texture2D" uid="uid://c6q0mesvs4pj1" path="res://art/buttons/quit.png" id="5_xkgcr"]
+[ext_resource type="Texture2D" uid="uid://cbhmnyuetnbvd" path="res://art/buttons/quit_pressed.png" id="6_gcpru"]
+
+[node name="game_over" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_rkaq1")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(0.333667, 0.184782)
+texture = ExtResource("2_8k2e6")
+
+[node name="RestartButton" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 474.0
+offset_top = 289.0
+offset_right = 1293.0
+offset_bottom = 769.0
+scale = Vector2(0.380751, 0.380008)
+texture_normal = ExtResource("3_qewtp")
+texture_pressed = ExtResource("4_ot3nr")
+
+[node name="QuitButton" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 496.0
+offset_top = 417.0
+offset_right = 1193.0
+offset_bottom = 971.0
+scale = Vector2(0.358299, 0.364119)
+texture_normal = ExtResource("5_xkgcr")
+texture_pressed = ExtResource("6_gcpru")
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

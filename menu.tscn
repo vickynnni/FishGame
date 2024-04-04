@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://cix8whkapy356"]
+
+[ext_resource type="Script" path="res://menu.gd" id="1_x40hx"]
+[ext_resource type="Texture2D" uid="uid://dkosgy7oq26io" path="res://art/Sin nombre.png" id="2_ch4pa"]
+[ext_resource type="Texture2D" uid="uid://8qevrwo2o275" path="res://art/buttons/start.png" id="3_7wbh4"]
+[ext_resource type="Texture2D" uid="uid://brb772mhbvw72" path="res://art/buttons/start_pressed.png" id="4_brf11"]
+[ext_resource type="Texture2D" uid="uid://c6q0mesvs4pj1" path="res://art/buttons/quit.png" id="5_rh4qu"]
+[ext_resource type="Texture2D" uid="uid://cbhmnyuetnbvd" path="res://art/buttons/quit_pressed.png" id="6_wnq83"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_x40hx")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -180.0
+offset_top = -113.0
+offset_right = 3693.0
+offset_bottom = 3760.0
+scale = Vector2(0.43675, 0.272805)
+texture = ExtResource("2_ch4pa")
+expand_mode = 1
+
+[node name="StartButton" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 427.0
+offset_top = 325.0
+offset_right = 1246.0
+offset_bottom = 762.0
+scale = Vector2(0.47286, 0.464126)
+size_flags_horizontal = 4
+texture_normal = ExtResource("3_7wbh4")
+texture_pressed = ExtResource("4_brf11")
+
+[node name="QuitButton" type="TextureButton" parent="."]
+layout_mode = 2
+offset_left = 474.0
+offset_top = 470.0
+offset_right = 1293.0
+offset_bottom = 1024.0
+scale = Vector2(0.47434, 0.485368)
+texture_normal = ExtResource("5_rh4qu")
+texture_pressed = ExtResource("6_wnq83")
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
