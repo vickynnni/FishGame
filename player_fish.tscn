@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://c7m73p17y4ea7"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_glpev"]
-[ext_resource type="Texture2D" path="res://art/pececillo_anim_up.png" id="2_hyqfn"]
-[ext_resource type="Texture2D" path="res://art/pececillo.png" id="2_qtaq1"]
-[ext_resource type="Texture2D" path="res://art/pececillo_anim_down.png" id="3_etla7"]
+[ext_resource type="Texture2D" uid="uid://ck7d5c5houfw3" path="res://art/pececillo_anim_up.png" id="2_hyqfn"]
+[ext_resource type="Texture2D" uid="uid://oalrwt1ja8ol" path="res://art/pececillo.png" id="2_qtaq1"]
+[ext_resource type="Texture2D" uid="uid://b5xpmuxvh6myk" path="res://art/pececillo_anim_down.png" id="3_etla7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_50gm8"]
 size = Vector2(86, 49)

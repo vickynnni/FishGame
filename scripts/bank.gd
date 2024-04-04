@@ -1,12 +1,23 @@
 class_name FishBank
 
 var fish_list = []
+var predator_list = []
 var bank_position = Vector2(0.0,0.0)
 var has_player = false
 var bank_max_speed = 6
 var bank_speed_boost = 8
 var normal_speed = 6
 var avg_velocity = Vector2(0.0,0.0)
+
+
+func flee_predators():
+	for predator in predator_list:
+		for fish in fish_list:
+			if(fish.fishType == "player"):
+				continue
+			var dist = fish.position - predator.position
+			if(dist.length() < 300):
+				fish.velocity += dist*0.0004
 
 func avoid_bank(dist):
 	for fish in fish_list:
@@ -37,6 +48,9 @@ func _ready():
 	
 	pass # Replace with function body.
 
+
+func addPredator(pred):
+	predator_list.append(pred)
 
 func separation(list):
 	for fish in list:
@@ -167,5 +181,6 @@ func _process(delta):
 	separation(fish_list)
 	alignment(fish_list)
 	cohesion(fish_list)
+	flee_predators()
 	pass
 

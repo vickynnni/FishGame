@@ -5,6 +5,8 @@ var NarrowFishClass = preload("res://narrow_fish.tscn")
 var MoonfishClass = preload("res://moonfish.tscn")
 @onready
 var player = get_node("PlayerFish")
+@onready
+var predator = get_node("Predator")
 var bank_list = []
 var points = 0
 var points_multiplier = 1.0
@@ -57,6 +59,7 @@ func _ready():
 	for n in 10:
 		create_moonfish_bank(randi()%10 + 2)
 	player.set_banks(bank_list)
+	predator.set_banks(bank_list)
 	pass # Replace with function body.
 
 
