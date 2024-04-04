@@ -19,6 +19,7 @@ var no_external_forces = false
 var max_num_boosts = 3
 var num_boosts = 3
 var mouse_multiplier = 0.0001
+var target_max_speed = normal_max_vel
 
 
 var bank_list = []
@@ -43,8 +44,8 @@ func _input(event):
 					
 
 func dec_max_speed():
-	if(current_max_vel > normal_max_vel):
-		current_max_vel -= 0.03
+	if(current_max_vel > target_max_speed):
+		current_max_vel -= 0.01
 
 # Called whgen the node enters the scene tree for the first time.
 func _ready():
@@ -54,7 +55,7 @@ func _ready():
 	separation = 1
 	avoidfactor = 0.001
 	matching_factor = 0.001
-	centering_factor = 0.001
+	centering_factor = 0.0013
 	speed_timer = get_node("SpeedTimer")
 	speed_timer.wait_time = 0.5
 	
@@ -100,15 +101,15 @@ func _process(delta):
 	dec_max_speed()
 	check_banks_proximity()
 	check_flip()
+	update_anim_speed()
 	if(attached_to_bank != null):
+		target_max_speed = attached_to_bank.avg_velocity.length()+0.5
 		boost = 6
-		if(!no_external_forces):
-			current_max_vel = attached_to_bank.avg_velocity.length() + 0.3
 	else:
 		boost = 2
-		current_max_vel -= 0.010
-	if(current_max_vel < min_max_vel):
-		current_max_vel = min_max_vel
+		current_max_vel -= 0.05
+	if(current_max_vel < target_max_speed):
+		current_max_vel = target_max_speed
 	velocity *= drag
 	if(velocity.length() > current_max_vel):
 		velocity = velocity.normalized()*current_max_vel
@@ -118,6 +119,7 @@ func _process(delta):
 	
 	rotation = velocity.angle()
 	calc_shadow()
+	print(velocity.length())
 	pass
 
 func calc_rotation():
@@ -147,9 +149,10 @@ func check_banks_proximity():
 			if(attached_to_bank == null):
 				bank.add_player(self)
 				attached_to_bank = bank
-				current_max_vel = attached_to_bank.avg_velocity.length()
+				target_max_speed = attached_to_bank.avg_velocity.length()
 		else:
 			if(bank == attached_to_bank):
+				target_max_speed = normal_max_vel
 				bank.remove_player(self)
 				attached_to_bank = null
 		
@@ -163,6 +166,10 @@ func check_banks_proximity():
 				mult2 = -1
 			bank.teleport(position + Vector2(mult1*randf_range(1000,1200),mult2*randf_range(1000,1500)))
 				
+
+func update_anim_speed():
+	var fps = floor(velocity)
+	$AnimatedSprite2D.speed_scale = velocity.length()*0.35
 
 func _on_timer_timeout():
 	can_speedup = true

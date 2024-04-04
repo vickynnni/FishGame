@@ -24,4 +24,5 @@ func _process(delta):
 			
 	velocity *= drag
 	position += velocity
+	#$CanvasLayer/Points.position = position
 	pass

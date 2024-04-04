@@ -17,7 +17,7 @@ func gotoavg(pos):
 		fish.velocity += pos*0.00001
 
 func teleport(_position:Vector2):
-	print("teleported to" + str(_position))
+	#print("teleported to" + str(_position))
 	var velocity = Vector2(randf_range(-20.0,20.0),randf_range(-20.0,20.0))
 	for fish in fish_list:
 		fish.position = _position + Vector2(randf_range(-30.0,30.0),randf_range(-30.0,30.0))
@@ -47,8 +47,6 @@ func separation(list):
 			if(fish == other_fish):
 				continue
 			distance = fish.position - other_fish.position
-			#if(other_fish.fishType == "player"):
-			#		threshold *= 0.4
 			if (distance.length() <= threshold):
 				fish.close_d += distance
 			if(distance.length() < 0.5):

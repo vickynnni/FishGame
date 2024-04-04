@@ -6,6 +6,8 @@ var MoonfishClass = preload("res://moonfish.tscn")
 @onready
 var player = get_node("PlayerFish")
 var bank_list = []
+var points = 0
+var points_multiplier = 1.0
 
 func create_normal_bank(num_fish):
 	var fish_list = []
@@ -58,6 +60,9 @@ func _ready():
 	pass # Replace with function body.
 
 
+func calc_points():
+	points += player.velocity.length()*0.1*points_multiplier + 0.01
+	$Camera2D/Points.text = str(floor(points))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -77,4 +82,5 @@ func _process(delta):
 		var goto = avg_pos - bank.bank_position 
 		bank.gotoavg(goto)
 	#print(get_viewport().get_visible_rect().size)
+	calc_points()
 	pass
