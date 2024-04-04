@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dxalwp48kx0ky"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_noehc"]
-[ext_resource type="Script" path="res://Camera.gd" id="2_2o3jf"]
+[ext_resource type="Script" path="res://scripts/Camera.gd" id="2_2o3jf"]
 [ext_resource type="PackedScene" uid="uid://c7m73p17y4ea7" path="res://player_fish.tscn" id="2_70qc6"]
 [ext_resource type="Script" path="res://scripts/ParallaxBackground.gd" id="3_x3saq"]
 [ext_resource type="FontFile" uid="uid://bshwr8wkx1vtl" path="res://art/Chalktastic-r78L.ttf" id="5_d7gyx"]

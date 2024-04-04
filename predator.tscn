@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://2mce3pt7s3td"]
+
+[ext_resource type="Texture2D" uid="uid://5bjqqcruy4hs" path="res://art/arrow.png" id="1_5spkh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i0oew"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5spkh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_loxnu"]
+size = Vector2(400, 386)
+
+[node name="Area2D" type="Area2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -1)
+scale = Vector2(1.32, 1.22)
+sprite_frames = SubResource("SpriteFrames_i0oew")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_loxnu")
