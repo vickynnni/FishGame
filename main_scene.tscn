@@ -4,8 +4,8 @@
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_2o3jf"]
 [ext_resource type="PackedScene" uid="uid://c7m73p17y4ea7" path="res://player_fish.tscn" id="2_70qc6"]
 [ext_resource type="Script" path="res://scripts/ParallaxBackground.gd" id="3_x3saq"]
-[ext_resource type="FontFile" uid="uid://bshwr8wkx1vtl" path="res://art/Chalktastic-r78L.ttf" id="5_d7gyx"]
-[ext_resource type="Texture2D" uid="uid://d4h0vyvqgqm4p" path="res://art/fondo2.png" id="5_kkco5"]
+[ext_resource type="FontFile" path="res://art/Chalktastic-r78L.ttf" id="5_d7gyx"]
+[ext_resource type="Texture2D" path="res://art/fondo2.png" id="5_kkco5"]
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_noehc")
