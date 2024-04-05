@@ -103,7 +103,7 @@ func _process(delta):
 	check_flip()
 	update_anim_speed()
 	if(attached_to_bank != null):
-		target_max_speed = attached_to_bank.avg_velocity.length()+0.5
+		target_max_speed = attached_to_bank.avg_velocity.length()+0.1
 		boost = 6
 	else:
 		boost = 2
