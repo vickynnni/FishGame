@@ -3,6 +3,7 @@ extends Area2D
 var velocity = Vector2(0.0,0.0);
 var player = null;
 var max_speed = 8;
+var speed_multiplier = 0.00055
 var bank_list = []
 
 
@@ -26,7 +27,7 @@ func _process(delta):
 func follow():
 	if player != null:
 		var dist_to_player = player.position - position;
-		velocity += dist_to_player*0.00055;
+		velocity += dist_to_player*speed_multiplier;
 		rotation = velocity.angle();
 
 func _on_area_entered(area):

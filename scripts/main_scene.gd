@@ -110,5 +110,5 @@ func spawn_predator():
 	p.position = player.position + Vector2(randf_range(-2000,2000),randf_range(-2000,2000))
 	predator_list.append(p)
 	p.set_banks(bank_list)
-	p.max_speed += 0.1*n_predators
+	p.speed_multiplier *= 1.1*n_predators
 	pass # Replace with function body.
