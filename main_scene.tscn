@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxalwp48kx0ky"]
+[gd_scene load_steps=12 format=3 uid="uid://dxalwp48kx0ky"]
 
 [ext_resource type="Script" path="res://scripts/main_scene.gd" id="1_noehc"]
 [ext_resource type="Script" path="res://scripts/Camera.gd" id="2_2o3jf"]
@@ -6,6 +6,92 @@
 [ext_resource type="Script" path="res://scripts/ParallaxBackground.gd" id="3_x3saq"]
 [ext_resource type="FontFile" uid="uid://bshwr8wkx1vtl" path="res://art/Chalktastic-r78L.ttf" id="5_d7gyx"]
 [ext_resource type="Texture2D" uid="uid://d4h0vyvqgqm4p" path="res://art/fondo2.png" id="5_kkco5"]
+[ext_resource type="Texture2D" uid="uid://bgkagf37hswmh" path="res://art/barra_dark.png" id="7_7h75a"]
+[ext_resource type="Texture2D" uid="uid://biwamg34gnfvo" path="res://art/barra.png" id="8_b503q"]
+
+[sub_resource type="Animation" id="Animation_0i5y3"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("points2d/points_boost:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 0.25),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("points2d/points_boost2:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xfoug"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("points2d/points_boost:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("points2d/points_boost:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2.31, 2.31)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("points2d/points_boost2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("points2d/points_boost2:scale")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_16yja"]
+_data = {
+"fade_in": SubResource("Animation_0i5y3"),
+"fade_out": SubResource("Animation_xfoug")
+}
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource("1_noehc")
@@ -14,7 +100,7 @@ script = ExtResource("1_noehc")
 script = ExtResource("3_x3saq")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-position = Vector2(-300, -28)
+position = Vector2(313, 225)
 metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
@@ -37,23 +123,135 @@ position = Vector2(-178.875, 474.125)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("5_kkco5")
 
+[node name="PlayerFish" parent="." instance=ExtResource("2_70qc6")]
+position = Vector2(346, 274)
+
+[node name="PredatorSpawner" type="Timer" parent="."]
+wait_time = 15.0
+autostart = true
+
+[node name="points2d" type="Node2D" parent="."]
+position = Vector2(348, 209)
+
+[node name="points_boost" type="RichTextLabel" parent="points2d"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -15.0
+offset_top = 1.0
+offset_right = 122.0
+offset_bottom = 51.0
+scale = Vector2(2.31, 2.31)
+theme_override_colors/default_color = Color(0.984314, 0.964706, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/normal_font = ExtResource("5_d7gyx")
+theme_override_font_sizes/normal_font_size = 30
+text = "0"
+
+[node name="points_boost2" type="RichTextLabel" parent="points2d"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -78.0
+offset_top = -37.0
+offset_right = 119.0
+offset_bottom = 16.0
+scale = Vector2(2, 2)
+theme_override_colors/default_color = Color(0.984314, 0.964706, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/normal_font = ExtResource("5_d7gyx")
+theme_override_font_sizes/normal_font_size = 25
+text = "Close call!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_16yja")
+}
+
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(360, 260)
 script = ExtResource("2_2o3jf")
 
-[node name="Points" type="RichTextLabel" parent="Camera2D"]
-offset_left = -605.0
-offset_top = -315.0
-offset_right = 145.0
-offset_bottom = -165.0
+[node name="Multiplier" type="RichTextLabel" parent="Camera2D"]
+offset_left = -585.0
+offset_top = -236.0
+offset_right = 165.0
+offset_bottom = -187.0
 theme_override_colors/default_color = Color(0.984314, 0.964706, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
+theme_override_fonts/normal_font = ExtResource("5_d7gyx")
+theme_override_font_sizes/normal_font_size = 30
+text = "1.0"
+
+[node name="Points" type="RichTextLabel" parent="Camera2D"]
+offset_left = -589.0
+offset_top = -303.0
+offset_right = 161.0
+offset_bottom = -231.0
+theme_override_colors/default_color = Color(0.984314, 0.964706, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 5
+theme_override_constants/shadow_offset_y = 5
 theme_override_fonts/normal_font = ExtResource("5_d7gyx")
 theme_override_font_sizes/normal_font_size = 50
 text = "0"
 
-[node name="PlayerFish" parent="." instance=ExtResource("2_70qc6")]
+[node name="Node2D" type="Node2D" parent="Camera2D"]
+position = Vector2(183, -181)
+scale = Vector2(0.185, 0.185)
 
-[node name="PredatorSpawner" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true
+[node name="barra4" type="TextureProgressBar" parent="Camera2D/Node2D"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 156.757
+offset_top = -675.676
+offset_right = 832.757
+offset_bottom = -439.676
+texture_under = ExtResource("7_7h75a")
+texture_progress = ExtResource("8_b503q")
+
+[node name="barra5" type="TextureProgressBar" parent="Camera2D/Node2D"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 823.321
+offset_top = -673.112
+offset_right = 1499.32
+offset_bottom = -437.112
+texture_under = ExtResource("7_7h75a")
+texture_progress = ExtResource("8_b503q")
+
+[node name="barra6" type="TextureProgressBar" parent="Camera2D/Node2D"]
+modulate = Color(0, 0, 0, 1)
+offset_left = 1492.55
+offset_top = -673.112
+offset_right = 2168.55
+offset_bottom = -437.112
+texture_under = ExtResource("7_7h75a")
+texture_progress = ExtResource("8_b503q")
+
+[node name="barra1" type="TextureProgressBar" parent="Camera2D/Node2D"]
+offset_left = 136.0
+offset_top = -700.0
+offset_right = 812.0
+offset_bottom = -464.0
+texture_under = ExtResource("7_7h75a")
+texture_progress = ExtResource("8_b503q")
+
+[node name="barra2" type="TextureProgressBar" parent="Camera2D/Node2D"]
+offset_left = 802.564
+offset_top = -697.436
+offset_right = 1478.56
+offset_bottom = -461.436
+texture_under = ExtResource("7_7h75a")
+texture_progress = ExtResource("8_b503q")
+
+[node name="barra3" type="TextureProgressBar" parent="Camera2D/Node2D"]
+offset_left = 1471.79
+offset_top = -697.436
+offset_right = 2147.79
+offset_bottom = -461.436
+texture_under = ExtResource("7_7h75a")
+texture_progress = ExtResource("8_b503q")
 
 [connection signal="timeout" from="PredatorSpawner" to="." method="spawn_predator"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -12,6 +12,7 @@ var local_mouse_position = Vector2(0.0,0.0)
 var global_mouse_position = Vector2(0.0,0.0)
 var can_speedup = true
 var speed_timer
+var boost_timer
 var extra_speed = 1
 var attached_to_bank = null
 var boost = 2
@@ -57,6 +58,7 @@ func _ready():
 	matching_factor = 0.001
 	centering_factor = 0.0013
 	speed_timer = get_node("SpeedTimer")
+	boost_timer = $BoostGenerator
 	speed_timer.wait_time = 0.5
 	
 	
@@ -89,21 +91,23 @@ func calc_shadow():
 	var shadow = get_node("Node/shadow")
 	shadow.position = self.position + shadow_offset
 	shadow.rotation = self.rotation
+	
+		
+func points_follow():
+	var points = get_node("Node/Points")
+	points.position = self.global_position + shadow_offset
+	points.rotation = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	
-	#print(num_boosts)
-	#print("max_vel: " + str(current_max_vel))
-	#print("vel: " + str(velocity.length()))
-	#calc_rotation()
 	go_to_mouse()
 	dec_max_speed()
 	check_banks_proximity()
 	check_flip()
 	update_anim_speed()
 	if(attached_to_bank != null):
-		target_max_speed = attached_to_bank.avg_velocity.length()+0.1
+		target_max_speed = attached_to_bank.avg_velocity.length()+0.5
 		boost = 6
 	else:
 		boost = 2
@@ -116,15 +120,14 @@ func _process(delta):
 	position += velocity
 	if(rotation_velocity > max_rotation_speed):
 		rotation_velocity = max_rotation_speed
-	
 	rotation = velocity.angle()
 	calc_shadow()
-	print(velocity.length())
+	points_follow()
+	#print(velocity.length())
 	pass
 
 func calc_rotation():
 	rotation_velocity = (local_mouse_position.angle())*0.07
-	#print(rotation_velocity)
 
 func go_to_mouse():
 	global_mouse_position = get_global_mouse_position()
@@ -180,4 +183,6 @@ func _on_timer_timeout():
 func _on_boost_generator_timeout():
 	if(num_boosts < max_num_boosts):
 		num_boosts += 1
+	else:
+		boost_timer.stop()
 	pass # Replace with function body.

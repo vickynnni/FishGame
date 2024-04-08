@@ -1,51 +1,83 @@
-[gd_scene load_steps=7 format=3 uid="uid://cix8whkapy356"]
+[gd_scene load_steps=11 format=3 uid="uid://cix8whkapy356"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_x40hx"]
-[ext_resource type="Texture2D" uid="uid://dkosgy7oq26io" path="res://art/Sin nombre.png" id="2_ch4pa"]
+[ext_resource type="Texture2D" uid="uid://d4h0vyvqgqm4p" path="res://art/fondo2.png" id="2_3fed6"]
 [ext_resource type="Texture2D" uid="uid://8qevrwo2o275" path="res://art/buttons/start.png" id="3_7wbh4"]
 [ext_resource type="Texture2D" uid="uid://brb772mhbvw72" path="res://art/buttons/start_pressed.png" id="4_brf11"]
 [ext_resource type="Texture2D" uid="uid://c6q0mesvs4pj1" path="res://art/buttons/quit.png" id="5_rh4qu"]
 [ext_resource type="Texture2D" uid="uid://cbhmnyuetnbvd" path="res://art/buttons/quit_pressed.png" id="6_wnq83"]
+[ext_resource type="Texture2D" uid="uid://dmcasuiaxmii1" path="res://art/title1.png" id="7_m5754"]
+[ext_resource type="Texture2D" uid="uid://byu2lrc5vhsyb" path="res://art/title2.png" id="8_d516l"]
+[ext_resource type="PackedScene" uid="uid://c7m73p17y4ea7" path="res://player_fish.tscn" id="8_wknty"]
 
-[node name="Menu" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[sub_resource type="SpriteFrames" id="SpriteFrames_o26pu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_m5754")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_d516l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 4.0
+}]
+
+[node name="Menu" type="Node2D"]
 script = ExtResource("1_x40hx")
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="TextureRect" parent="Control"]
 layout_mode = 0
-offset_left = -180.0
-offset_top = -113.0
-offset_right = 3693.0
-offset_bottom = 3760.0
+offset_left = -2.0
+offset_top = -41.0
+offset_right = 2981.0
+offset_bottom = 2865.0
 scale = Vector2(0.43675, 0.272805)
-texture = ExtResource("2_ch4pa")
+texture = ExtResource("2_3fed6")
 expand_mode = 1
 
-[node name="StartButton" type="TextureButton" parent="."]
+[node name="StartButton" type="TextureButton" parent="Control"]
+z_index = 1
 layout_mode = 2
-offset_left = 427.0
-offset_top = 325.0
-offset_right = 1246.0
-offset_bottom = 762.0
+offset_left = 282.0
+offset_top = 476.0
+offset_right = 1101.0
+offset_bottom = 913.0
 scale = Vector2(0.47286, 0.464126)
 size_flags_horizontal = 4
 texture_normal = ExtResource("3_7wbh4")
 texture_pressed = ExtResource("4_brf11")
 
-[node name="QuitButton" type="TextureButton" parent="."]
+[node name="QuitButton" type="TextureButton" parent="Control"]
+z_index = 1
 layout_mode = 2
-offset_left = 474.0
-offset_top = 470.0
-offset_right = 1293.0
-offset_bottom = 1024.0
+offset_left = 655.0
+offset_top = 449.0
+offset_right = 1474.0
+offset_bottom = 1003.0
 scale = Vector2(0.47434, 0.485368)
 texture_normal = ExtResource("5_rh4qu")
 texture_pressed = ExtResource("6_wnq83")
 
-[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 95
+position = Vector2(636, 245)
+scale = Vector2(0.193297, 0.193297)
+sprite_frames = SubResource("SpriteFrames_o26pu")
+autoplay = "default"
+frame_progress = 0.330706
+
+[node name="PlayerFish" parent="." instance=ExtResource("8_wknty")]
+position = Vector2(140, 246)
+
+[connection signal="pressed" from="Control/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Control/QuitButton" to="." method="_on_quit_button_pressed"]

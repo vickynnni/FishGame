@@ -65,5 +65,7 @@ sprite_frames = SubResource("SpriteFrames_l53s8")
 centered = false
 offset = Vector2(-301.299, -143.907)
 
+[node name="Points" type="Node2D" parent="Node"]
+
 [connection signal="timeout" from="SpeedTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="BoostGenerator" to="." method="_on_boost_generator_timeout"]

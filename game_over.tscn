@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx2iu1p3uo6pk"]
+[gd_scene load_steps=8 format=3 uid="uid://bx2iu1p3uo6pk"]
 
 [ext_resource type="Script" path="res://scripts/game_over.gd" id="1_rkaq1"]
-[ext_resource type="Texture2D" uid="uid://dkosgy7oq26io" path="res://art/Sin nombre.png" id="2_8k2e6"]
+[ext_resource type="Texture2D" uid="uid://d4h0vyvqgqm4p" path="res://art/fondo2.png" id="2_rwnli"]
 [ext_resource type="Texture2D" uid="uid://cac1ls2kh1hex" path="res://art/buttons/restart.png" id="3_qewtp"]
 [ext_resource type="Texture2D" uid="uid://n86rruqgby2e" path="res://art/buttons/restart_pressed.png" id="4_ot3nr"]
 [ext_resource type="Texture2D" uid="uid://c6q0mesvs4pj1" path="res://art/buttons/quit.png" id="5_xkgcr"]
 [ext_resource type="Texture2D" uid="uid://cbhmnyuetnbvd" path="res://art/buttons/quit_pressed.png" id="6_gcpru"]
+[ext_resource type="FontFile" uid="uid://bshwr8wkx1vtl" path="res://art/Chalktastic-r78L.ttf" id="7_rk51x"]
 
 [node name="game_over" type="Control"]
 layout_mode = 3
@@ -21,27 +22,56 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 scale = Vector2(0.333667, 0.184782)
-texture = ExtResource("2_8k2e6")
+texture = ExtResource("2_rwnli")
+
+[node name="Game Over" type="RichTextLabel" parent="."]
+offset_left = 157.0
+offset_top = 108.0
+offset_right = 1173.0
+offset_bottom = 304.0
+theme_override_fonts/normal_font = ExtResource("7_rk51x")
+theme_override_font_sizes/normal_font_size = 141
+text = "GAME OVER"
 
 [node name="RestartButton" type="TextureButton" parent="."]
 layout_mode = 2
-offset_left = 474.0
-offset_top = 289.0
-offset_right = 1293.0
-offset_bottom = 769.0
-scale = Vector2(0.380751, 0.380008)
+offset_left = 301.0
+offset_top = 448.0
+offset_right = 1013.0
+offset_bottom = 928.0
+scale = Vector2(0.5, 0.499)
 texture_normal = ExtResource("3_qewtp")
 texture_pressed = ExtResource("4_ot3nr")
 
 [node name="QuitButton" type="TextureButton" parent="."]
 layout_mode = 2
-offset_left = 496.0
-offset_top = 417.0
-offset_right = 1193.0
-offset_bottom = 971.0
-scale = Vector2(0.358299, 0.364119)
+offset_left = 667.0
+offset_top = 414.0
+offset_right = 1364.0
+offset_bottom = 968.0
+scale = Vector2(0.5, 0.508)
 texture_normal = ExtResource("5_xkgcr")
 texture_pressed = ExtResource("6_gcpru")
+
+[node name="Your_score" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 364.0
+offset_top = 348.0
+offset_right = 678.0
+offset_bottom = 439.0
+theme_override_fonts/normal_font = ExtResource("7_rk51x")
+theme_override_font_sizes/normal_font_size = 41
+text = "Your score:"
+
+[node name="score" type="RichTextLabel" parent="."]
+offset_left = 689.0
+offset_top = 324.0
+offset_right = 1003.0
+offset_bottom = 433.0
+theme_override_colors/default_color = Color(0.984314, 0.964706, 0, 1)
+theme_override_fonts/normal_font = ExtResource("7_rk51x")
+theme_override_font_sizes/normal_font_size = 76
+text = "1543"
 
 [connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

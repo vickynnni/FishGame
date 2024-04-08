@@ -8,6 +8,7 @@ var bank_max_speed = 6
 var bank_speed_boost = 8
 var normal_speed = 6
 var avg_velocity = Vector2(0.0,0.0)
+var has_menu = false
 
 
 func flee_predators():
@@ -130,7 +131,7 @@ func cohesion(list):
 			if(fish.no_external_forces):
 				continue
 		fish.velocity += (pos_avg - fish.position)*fish.centering_factor
-		#detect_wall_collisions(fish)
+		
 	bank_position = pos_avg
 
 func detect_wall_collisions(fish):
@@ -143,6 +144,8 @@ func detect_wall_collisions(fish):
 	var dist_left_border = fish.position.x - leftmargin
 	var dist_top_border =  fish.position.y - topmargin
 	var dist_bottom_border = bottommargin - fish.position.y
+	
+	print(dist_top_border)
 	
 	if (fish.position.x >= rightmargin):
 		fish.velocity.x = -fish.velocity.x
@@ -181,6 +184,11 @@ func _process(delta):
 	separation(fish_list)
 	alignment(fish_list)
 	cohesion(fish_list)
-	flee_predators()
+	if has_menu:
+		for fish in fish_list:
+			detect_wall_collisions(fish)
+		#print("rwojge")
+	
+	#flee_predators()
 	pass
 

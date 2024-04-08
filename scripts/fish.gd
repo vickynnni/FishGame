@@ -33,17 +33,11 @@ func check_flip():
 		if(!rightleft):
 			$AnimatedSprite2D.scale.y = -y_scale
 			$AnimatedSprite2D.scale.x = x_scale
-			#shadow.scale.y = -s_y_scale
-			#shadow.scale.x = s_x_scale
-			#shadow_offset = shadow_offset + Vector2(5,0)
 			rightleft=true
 	else:
 		if(rightleft):
 			$AnimatedSprite2D.scale.y = -y_scale
 			$AnimatedSprite2D.scale.x = x_scale
-			#shadow.scale.y = -s_y_scale
-			#shadow.scale.x = s_x_scale
-			#shadow_offset = Vector2(6,6)
 			rightleft = false
 		
 

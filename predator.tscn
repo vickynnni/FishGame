@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://2mce3pt7s3td"]
+[gd_scene load_steps=6 format=3 uid="uid://2mce3pt7s3td"]
 
-[ext_resource type="Texture2D" uid="uid://5bjqqcruy4hs" path="res://art/arrow.png" id="1_5spkh"]
 [ext_resource type="Script" path="res://scripts/predator.gd" id="1_bxum8"]
+[ext_resource type="Texture2D" uid="uid://cmec2eovxe5vc" path="res://art/tiburon_1.png" id="2_cjhw6"]
+[ext_resource type="Texture2D" uid="uid://01ey175jl7hb" path="res://art/tiburon_2.png" id="3_iras6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i0oew"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_5spkh")
+"texture": ExtResource("2_cjhw6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_iras6")
 }],
 "loop": true,
 "name": &"default",
@@ -21,10 +25,13 @@ size = Vector2(118, 127.5)
 script = ExtResource("1_bxum8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(5.00002, -1.99998)
-scale = Vector2(0.356667, 0.329646)
+position = Vector2(14, 4)
+scale = Vector2(0.125696, 0.116174)
 sprite_frames = SubResource("SpriteFrames_i0oew")
+autoplay = "default"
+frame_progress = 0.0532912
+offset = Vector2(-835.347, -25.8234)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -6)
+position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_loxnu")
