@@ -3,6 +3,7 @@ extends Area2D
 var velocity = Vector2(0.0,0.0);
 var player = null;
 var max_speed = 8;
+var speed_multiplier = 0.00055
 var bank_list = []
 var vel_multiplier = 0.0004
 
@@ -26,6 +27,7 @@ func _process(delta):
 		update_anim_speed()
 		position += velocity;
 
+<<<<<<< HEAD
 func update_anim_speed():
 	var fps = floor(velocity)
 	$AnimatedSprite2D.speed_scale = velocity.length()*0.1
@@ -48,6 +50,13 @@ func check_flip():
 func follow(dist):
 	velocity += dist*vel_multiplier;
 	rotation = velocity.angle();
+=======
+func follow():
+	if player != null:
+		var dist_to_player = player.position - position;
+		velocity += dist_to_player*speed_multiplier;
+		rotation = velocity.angle();
+>>>>>>> ea267ff791030aa661cea161b68fd489a7be1c27
 
 func _on_area_entered(area):
 	if area.get_name() == "PlayerFish":
